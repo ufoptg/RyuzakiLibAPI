@@ -5,6 +5,7 @@ g4f
 RyuzakiLib
 uvicorn
 gpytranslate
+google-search-results
 httpx
 serpapi
 telegraph
@@ -12,7 +13,7 @@ pathlib
 anyio==3.6.2
 certifi==2023.7.22
 click==7.1.2
-fastapi==0.95.2
+fastapi[all]
 h11==0.14.0
 httpcore==0.17.0
 httptools==0.5.0

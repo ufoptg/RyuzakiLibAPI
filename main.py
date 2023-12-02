@@ -101,6 +101,15 @@ app = FastAPI(
     docs_url="/"
 )
 
+def validate_api_key(api_key: str = Header(...)):
+    USERS_API_KEYS = db.get_all_api_keys()
+    if api_key not in USERS_API_KEYS:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
+def validate_api_key_only_devs(api_key: str = Header(...)):
+    if api_key not in ONLY_DEVELOPER_API_KEYS:
+        raise HTTPException(status_code=401, detail="Invalid API key")
+
 @app.get("/ryuzaki/getbanlist")
 def sibyl_get_all_banlist():
     banned_users = db.get_all_banned()
@@ -123,7 +132,7 @@ def blacklist_words():
 @app.delete("/ryuzaki/sibyldel")
 def sibyl_system_delete(
     user_id: int = Query(..., description="User ID in query parameter only developer"),
-    api_key: None = Depends(code.validate_api_key_only_devs)
+    api_key: None = Depends(validate_api_key_only_devs)
 ):
     try:
         _, _, _, _, sibyl_user_id = db.get_sibyl_system_banned(user_id)
@@ -140,7 +149,7 @@ def sibyl_system_delete(
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     if user_id != DEVELOPER_ID:
         return {"status": "false", "message": "Only Developer"}
@@ -172,7 +181,7 @@ def sibyl_system_ban(
 @app.get("/ryuzaki/sibyl")
 def sibyl_system(
     user_id: int = Query(..., description="User ID in query parameter"),
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     sibyl_name, reason, is_banned, date_joined, sibyl_user_id = db.get_sibyl_system_banned(user_id)
     if sibyl_name and reason and is_banned and date_joined and sibyl_user_id:
@@ -192,7 +201,7 @@ def sibyl_system(
 @app.get("/ryuzaki/ai")
 def ryuzaki_ai(
     text: str = Query(..., description="text in query parameter"),
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     try:
         response_data = code.ryuzaki_ai_text(text)
@@ -265,7 +274,7 @@ def ocr_space_url(
     url: str = Query(..., description="URL in query parameter"),
     overlay: bool=False,
     language: str = Query("eng", description="Language in query parameter"),
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     payload = {
         "url": url,
@@ -296,7 +305,7 @@ def ocr_space_url(
 @app.get("/ryuzaki/chatgpt4")
 def chatgpt4_support(
     query: str=None,
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     try:
         response = g4f.ChatCompletion.create(

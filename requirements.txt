@@ -1,6 +1,8 @@
 requests
 pymongo
 bs4
+g4f
+RyuzakiLib
 uvicorn
 gpytranslate
 httpx

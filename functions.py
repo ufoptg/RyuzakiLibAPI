@@ -18,21 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
-import database as db
-from fastapi import HTTPException, Header
-from main import SOURCE_ALPHA_URL, ONLY_DEVELOPER_API_KEYS, HUGGING_TOKEN
 
 def ryuzaki_ai_text(text):
     API_URL = SOURCE_ALPHA_URL
     headers = {"Authorization": f"Bearer {HUGGING_TOKEN}"}
     response = requests.post(API_URL, headers=headers, json={"inputs": text})
     return response.json()
-
-def validate_api_key(api_key: str = Header(...)):
-    USERS_API_KEYS = db.get_all_api_keys()
-    if api_key not in USERS_API_KEYS:
-        raise HTTPException(status_code=401, detail="Invalid API key")
-
-def validate_api_key_only_devs(api_key: str = Header(...)):
-    if api_key not in ONLY_DEVELOPER_API_KEYS:
-        raise HTTPException(status_code=401, detail="Invalid API key")

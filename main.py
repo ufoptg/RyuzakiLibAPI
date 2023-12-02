@@ -82,7 +82,7 @@ SOURCR_TIKTOK_WTF_URL = os.environ["SOURCR_TIKTOK_WTF_URL"]
 SOURCR_TIKTOK_TECH_URL = os.environ["SOURCR_TIKTOK_TECH_URL"]
 DEVELOPER_ID = os.environ["DEVELOPER_ID"]
 
-description = """ 
+description = """
 - Ryuzaki Library: [Library Here](https://github.com/TeamKillerX/RyuzakiLib)
 
 •Developed by [@xtdevs](https://t.me/xtdevs)
@@ -205,7 +205,7 @@ def ryuzaki_ai(
 ):
     try:
         response_data = code.ryuzaki_ai_text(text)
-        
+
         if isinstance(response_data, list) and len(response_data) > 0:
             first_result = response_data[0]
             if "generated_text" in first_result:
@@ -216,9 +216,9 @@ def ryuzaki_ai(
                         "ryuzaki_text": message
                     }
                 }
-        
+
         return {"status": "false", "message": "Invalid response format"}
-        
+
     except Exception as e:
         return {"status": "false", "message": f"error: {e}"}
 
@@ -435,9 +435,9 @@ def waifu_pics(
 ):
     waifu_api = f"{SOURCR_WAIFU_URL}/{types}"
     waifu_param = f"{waifu_api}/{category}"
-    
+
     response = requests.get(waifu_param)
-    
+
     if response.status_code != 200:
         return "Sorry, there was an error processing your request. Please try again later"
     data_waifu = response.json()
@@ -599,7 +599,7 @@ def tiktok_downloader(tiktok_url: Union[str, None] = None, only_video: bool=None
     parameter = f"tiktok?url={tiktok_url}"
     api_url = f"{api_devs}/{parameter}"
     response = requests.get(api_url)
-    
+
     if response.status_code != 200:
         return "Error: Unable to fetch data from the TikTok API"
     try:
@@ -622,7 +622,7 @@ def tiktok_downloader(tiktok_url: Union[str, None] = None, only_video: bool=None
         return "Error: TikTok data not found or unsupported format"
     except:
         return {"status": "false", "message": "Invalid Link"}
-        
+
 @app.get("/ryuzaki/mediafire")
 def mediafire(link: Union[str, None] = None):
   try:

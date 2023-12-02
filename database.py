@@ -29,12 +29,12 @@ db = client_mongo["tiktokbot"]
 collection = db["users"]
 
 RAMDOM_STATUS = [
-    "civilian", 
-    "wanted", 
-    "undercover", 
-    "rogue_agent", 
-    "innocent", 
-    "fugitive", 
+    "civilian",
+    "wanted",
+    "undercover",
+    "rogue_agent",
+    "innocent",
+    "fugitive",
     "covert_operator"
 ]
 

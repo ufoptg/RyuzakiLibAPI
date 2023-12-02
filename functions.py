@@ -19,7 +19,7 @@
 
 import requests
 import database as db
-from fastapi import HTTPException
+from fastapi import HTTPException, Header
 from main import SOURCE_ALPHA_URL, ONLY_DEVELOPER_API_KEYS, HUGGING_TOKEN
 
 def ryuzaki_ai_text(text):

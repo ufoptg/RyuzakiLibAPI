@@ -30,5 +30,5 @@ if __name__ == "__main__":
 * [Fork the project](https://github.com/TeamKillerX/RyuzakiLib) and send pull requests
 
 ### Credits
-* [Randydev](https://github.com/TeamKillerX/)
+* [![TeamKillerX-Devs](https://img.shields.io/static/v1?label=TeamkillerX&message=devs&color=critical)](https://t.me/xtdevs)
 * [FastApi](https://github.com/CYCNO/Direct-Download-API)

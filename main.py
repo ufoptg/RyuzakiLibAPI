@@ -151,7 +151,7 @@ def sibyl_system_ban(
     reason: str = Query(..., description="Reason in query parameter"),
     api_key: None = Depends(validate_api_key)
 ):
-    if user_id != DEVELOPER_ID:
+    if user_id != int(DEVELOPER_ID):
         return {"status": "false", "message": "Only Developer"}
 
     try:

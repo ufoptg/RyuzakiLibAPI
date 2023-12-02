@@ -8,7 +8,7 @@ serpapi
 telegraph
 pathlib
 anyio==3.6.2
-certifi==2020.12.5
+certifi==2023.7.22
 click==7.1.2
 fastapi==0.95.2
 h11==0.14.0

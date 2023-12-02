@@ -18,6 +18,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import requests
+import os
+
+HUGGING_TOKEN = os.environ["HUGGING_TOKEN"]
 
 def ryuzaki_ai_text(text):
     API_URL = SOURCE_ALPHA_URL

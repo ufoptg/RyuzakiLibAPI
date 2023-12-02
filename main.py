@@ -241,7 +241,7 @@ def google_reverse(
     image_url: str=None,
     language: str="en",
     google_lang: str="us",
-    api_key: None = Depends(code.validate_api_key)
+    api_key: None = Depends(validate_api_key)
 ):
     params = {
         "api_key": REVERSE_IMAGE_API,

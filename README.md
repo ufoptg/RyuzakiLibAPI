@@ -26,6 +26,25 @@ if __name__ == "__main__":
    uvicorn.run(app, host="0.0.0.0")
 ```
 
+### How to secret via Hosting Cloud
+```.env
+MONGO_URL=url
+REVERSE_IMAGE_API=apikey
+OCR_API_KEY=apikey
+ONLY_DEVELOPER_API_KEYS=random
+HUGGING_TOKEN=apikey
+SOURCE_UNSPLASH_URL=url
+SOURCE_OCR_URL=url
+SOURCE_ALPHA_URL=url
+SOURCR_WAIFU_URL=url
+SOURCR_TIKTOK_WTF_URL=url
+SOURCR_TIKTOK_TECH_URL=url
+DEVELOPER_ID=0
+```
+### Troubleshoot
+Sometimes errors occur, but we are here to help! This guide covers some of the most common issues we’ve seen and how you can resolve them. However, this guide isn’t meant to be a comprehensive collection of every 🤗 FastAPI issue. For more help with troubleshooting your issue, try:
+* [Contact Support](https://t.me/xtdevs)
+
 ### Contributing
 * [Fork the project](https://github.com/TeamKillerX/RyuzakiLib) and send pull requests
 

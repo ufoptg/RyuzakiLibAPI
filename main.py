@@ -77,9 +77,9 @@ HUGGING_TOKEN = os.environ["HUGGING_TOKEN"]
 SOURCE_UNSPLASH_URL = os.environ["SOURCE_UNSPLASH_URL"]
 SOURCE_OCR_URL = os.environ["SOURCE_OCR_URL"]
 SOURCE_ALPHA_URL = os.environ["SOURCE_ALPHA_URL"]
-SOURCR_WAIFU_URL = os.environ["SOURCR_WAIFU_URL"]
-SOURCR_TIKTOK_WTF_URL = os.environ["SOURCR_TIKTOK_WTF_URL"]
-SOURCR_TIKTOK_TECH_URL = os.environ["SOURCR_TIKTOK_TECH_URL"]
+SOURCE_WAIFU_URL = os.environ["SOURCR_WAIFU_URL"]
+SOURCE_TIKTOK_WTF_URL = os.environ["SOURCE_TIKTOK_WTF_URL"]
+SOURCE_TIKTOK_TECH_URL = os.environ["SOURCE_TIKTOK_TECH_URL"]
 DEVELOPER_ID = os.environ["DEVELOPER_ID"]
 
 description = """
@@ -433,7 +433,7 @@ def waifu_pics(
     types: str="sfw",
     category: str="neko"
 ):
-    waifu_api = f"{SOURCR_WAIFU_URL}/{types}"
+    waifu_api = f"{SOURCE_WAIFU_URL}/{types}"
     waifu_param = f"{waifu_api}/{category}"
 
     response = requests.get(waifu_param)
@@ -571,7 +571,7 @@ def whois_ip_address(ip_address: str=None):
 
 @app.get("/ryuzaki/tiktok_douyin")
 def tiktok_douyin(tiktok_url: str=None):
-    response = requests.get(f"{SOURCR_TIKTOK_WTF_URL}={tiktok_url}")
+    response = requests.get(f"{SOURCE_TIKTOK_WTF_URL}={tiktok_url}")
     if response.status_code != 200:
         return "Error request:"
     try:
@@ -595,7 +595,7 @@ def tiktok_douyin(tiktok_url: str=None):
 
 @app.get("/ryuzaki/tiktok")
 def tiktok_downloader(tiktok_url: Union[str, None] = None, only_video: bool=None):
-    api_devs = SOURCR_TIKTOK_TECH_URL
+    api_devs = SOURCE_TIKTOK_TECH_URL
     parameter = f"tiktok?url={tiktok_url}"
     api_url = f"{api_devs}/{parameter}"
     response = requests.get(api_url)

@@ -88,7 +88,7 @@ def blacklist_words():
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
-    api_key: str = Query(..., description="Api key in query parameter"),
+    api_key: str = Query(..., description="Api key in query parameter")
 ):
     if user_id != TELEGRAM_ID:
         return {"status": "false", "message": "Only Developer"}
@@ -99,7 +99,7 @@ def sibyl_system_ban(
         sibyl_user_id = response.get("randydev", {}).get("sibyl_user_id")
         if sibyl_user_id:
             return {"status": "false", "message": "User is already banned"}
-            
+
         response_str = clients.add_ban(user_id=user_id, reason=reason, is_banned=True)
         return {
             "status": "true",

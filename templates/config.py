@@ -1,0 +1,5 @@
+TITLE="title template"
+DESCRIPTION="description template"
+VERSION="0.0.1"
+TERMS_OF_SERVICE="terms template"
+DOCS_URL="/"

@@ -59,6 +59,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 
 from templates.config import *
+from RyuzakiLib.spamwatch.clients import SibylBan
 
 logging.basicConfig(level=logging.ERROR)
 
@@ -73,3 +74,39 @@ app = FastAPI(
 @app.get("/test")
 def hello_world():
     return {"message": "hello world"}
+
+@app.get("/ryuzaki/blacklist-words")
+def blacklist_words():
+    try:
+        BLACKLIST_WORDS = BadWordsList()
+        results_all = BLACKLIST_WORDS.banned_by_google(file_txt="banned_by_google.txt", storage=True)
+        return {"status": "true", "results": results_all}
+    except Exception as e:
+        return {"status": "false", "message": f"Internal server error: {str(e)}"}
+
+@app.post("/ryuzaki/sibylban")
+def sibyl_system_ban(
+    user_id: int = Query(..., description="User ID in query parameter"),
+    reason: str = Query(..., description="Reason in query parameter"),
+    api_key: str = Query(..., description="Api key in query parameter"),
+):
+    if user_id != TELEGRAM_ID:
+        return {"status": "false", "message": "Only Developer"}
+
+    clients = SiblyBan(api_key=api_key)
+    try:
+        response = clients.get_ban(user_id=user_id, banlist=True)
+        sibyl_user_id = response.get("randydev", {}).get("sibyl_user_id")
+        if sibyl_user_id:
+            return {"status": "false", "message": "User is already banned"}
+            
+        response_str = clients.add_ban(user_id=user_id, reason=reason, is_banned=True)
+        return {
+            "status": "true",
+            "results": {
+                "message": response_str
+            }
+        }
+    except Exception as e:
+        logging.error(f"Error in sibyl_system_ban: {e}")
+        return {"status": "false", "message": "Internal server error"}

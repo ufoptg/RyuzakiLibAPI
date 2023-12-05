@@ -815,3 +815,6 @@ def myfile(link: Union[str, None] = None):
     return jsondata
   except:
     return "{'status': 'false', 'message': 'Invalid Link'}"
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0")

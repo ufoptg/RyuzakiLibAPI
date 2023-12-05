@@ -110,3 +110,6 @@ def sibyl_system_ban(
     except Exception as e:
         logging.error(f"Error in sibyl_system_ban: {e}")
         return {"status": "false", "message": "Internal server error"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0")

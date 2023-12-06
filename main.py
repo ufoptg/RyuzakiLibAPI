@@ -158,7 +158,7 @@ def sibyl_system_ban(
         date_joined = str(dt.now())
         sibyl_ban = random.choice(db.RAMDOM_STATUS)
         ban_data = db.get_sibyl_system_banned(user_id)
-        
+
         if ban_data is not None:
             _, _, is_banned, _, sibyl_user_id = ban_data
             return {"status": "false", "message": "User is already banned"}

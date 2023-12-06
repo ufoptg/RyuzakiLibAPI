@@ -145,7 +145,6 @@ def sibyl_system_delete(
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
-@app.post("/ryuzaki/sibylban")
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
@@ -157,9 +156,10 @@ def sibyl_system_ban(
     try:
         date_joined = str(dt.now())
         sibyl_ban = random.choice(db.RAMDOM_STATUS)
-        _, _, is_banned, _, sibyl_user_id = get_sibyl_system_banned(user_id)
-
-        if sibyl_user_id and is_banned:
+        ban_data = db.get_sibyl_system_banned(user_id)
+        
+        if ban_data is not None:
+            _, _, is_banned, _, sibyl_user_id = ban_data
             return {"status": "false", "message": "User is already banned"}
 
         db.new_sibyl_system_banned(user_id, sibyl_ban, reason, date_joined)

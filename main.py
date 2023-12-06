@@ -177,7 +177,7 @@ def sibyl_system_ban(
         }
     except Exception as e:
         logging.error(f"Error in sibyl_system_ban: {e}")
-        return {"status": "false", "message": "Internal server error"
+        return {"status": "false", "message": "Internal server error"}
 
 @app.get("/ryuzaki/sibyl")
 def sibyl_system(

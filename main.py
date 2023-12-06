@@ -109,10 +109,6 @@ def validate_api_key_only_devs(api_key: str = Header(...)):
     if api_key not in ONLY_DEVELOPER_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API key")
 
-@app.get("/test")
-def hello_world():
-    users_api_keys = db.get_all_api_keys()
-    return {"message": users_api_keys}
 
 @app.get("/ryuzaki/getbanlist")
 def sibyl_get_all_banlist():

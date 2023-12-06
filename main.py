@@ -89,7 +89,7 @@ description = """
 """
 
 app = FastAPI(
-    title="RyuzakiLib API",
+    title="API",
     description=description,
     version="1.3.1",
     terms_of_service="Use It Only For Personal Project Else I Need To Delete The Api",
@@ -109,6 +109,10 @@ def validate_api_key(api_key: str = Header(...)):
 def validate_api_key_only_devs(api_key: str = Header(...)):
     if api_key not in ONLY_DEVELOPER_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API key")
+
+@app.get("/test")
+def hello_world():
+    return {"message": "hello world"}
 
 @app.get("/ryuzaki/getbanlist")
 def sibyl_get_all_banlist():

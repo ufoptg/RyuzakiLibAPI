@@ -183,7 +183,7 @@ def sibyl_system_ban(
 @app.get("/UFoP/bans")
 def sibyl_system(
     user_id: int = Query(..., description="User ID in query parameter"),
-    api_key: None = Depends(validate_api_key)
+    api_key: None = Depends(validate_api_key) or Depends(validate_api_key_only_devs)
 ):
     sibyl_name, reason, is_banned, date_joined, sibyl_user_id = db.get_sibyl_system_banned(user_id)
     if sibyl_name and reason and is_banned and date_joined and sibyl_user_id:

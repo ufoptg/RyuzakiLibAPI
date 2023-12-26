@@ -59,7 +59,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 
 from RyuzakiLib.hackertools.chatgpt import RendyDevChat
-from RyuzakiLib.hackertools.openai import OpenAiToken
+from RyuzakiLib.hackertools.openai_api import OpenAiToken
 from RyuzakiLib.mental import BadWordsList
 from RyuzakiLib.spamwatch.clients import SibylBan
 

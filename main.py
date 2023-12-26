@@ -84,8 +84,9 @@ SOURCE_TIKTOK_TECH_URL = os.environ["SOURCE_TIKTOK_TECH_URL"]
 DEVELOPER_ID = os.environ["DEVELOPER_ID"]
 
 description = """
+~ Developed written and powered by
 - Ryuzaki Library: [Library Here](https://github.com/TeamKillerX/RyuzakiLib)
-
+- @xtdevs
 """
 
 app = FastAPI(
@@ -94,8 +95,8 @@ app = FastAPI(
     version="1.3.1",
     terms_of_service="Use It Only For Personal Project Else I Need To Delete The Api",
     contact={
-        "name": "RyuzakiLib",
-        "url": "https://t.me/xtdevs",
+        "name": "🌀ʊʄ⊕ք🌀",
+        "url": "https://t.me/UFoPInfo,
     },
     docs_url="/"
 )
@@ -182,7 +183,7 @@ def sibyl_system_ban(
 @app.get("/UFoP/bans")
 def sibyl_system(
     user_id: int = Query(..., description="User ID in query parameter"),
-    api_key: None = Depends(validate_api_key_only_devs)
+    api_key: None = Depends(validate_api_key)
 ):
     sibyl_name, reason, is_banned, date_joined, sibyl_user_id = db.get_sibyl_system_banned(user_id)
     if sibyl_name and reason and is_banned and date_joined and sibyl_user_id:

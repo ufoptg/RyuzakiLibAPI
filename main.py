@@ -110,7 +110,7 @@ def validate_api_key_only_devs(api_key: str = Header(...)):
         raise HTTPException(status_code=401, detail="Invalid API key")
 
 
-@app.get("/ryuzaki/getbanlist")
+@app.get("/UFoP/getbanlist")
 def sibyl_get_all_banlist():
     banned_users = db.get_all_banned()
     return {
@@ -120,7 +120,7 @@ def sibyl_get_all_banlist():
         }
     }
 
-@app.get("/ryuzaki/blacklist-words")
+@app.get("/UFoP/blacklist-words")
 def blacklist_words():
     try:
         BLACKLIST_WORDS = BadWordsList()
@@ -129,7 +129,7 @@ def blacklist_words():
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
-@app.delete("/ryuzaki/sibyldel")
+@app.delete("/UFoP/bandel")
 def sibyl_system_delete(
     user_id: int = Query(..., description="User ID in query parameter only developer"),
     api_key: None = Depends(validate_api_key_only_devs)
@@ -145,7 +145,7 @@ def sibyl_system_delete(
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
-@app.post("/ryuzaki/sibylban")
+@app.post("/UFoP/banner")
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
@@ -179,7 +179,7 @@ def sibyl_system_ban(
         logging.error(f"Error in sibyl_system_ban: {e}")
         return {"status": "false", "message": "Internal server error"}
 
-@app.get("/ryuzaki/sibyl")
+@app.get("/UFoP/bans")
 def sibyl_system(
     user_id: int = Query(..., description="User ID in query parameter"),
     api_key: None = Depends(validate_api_key_only_devs)

@@ -96,7 +96,7 @@ app = FastAPI(
     terms_of_service="Use It Only For Personal Project Else I Need To Delete The Api",
     contact={
         "name": "🌀ʊʄ⊕ք🌀",
-        "url": "https://t.me/UFoPInfo,
+        "url": "https://t.me/UFoPInfo",
     },
     docs_url="/"
 )

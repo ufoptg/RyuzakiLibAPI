@@ -59,8 +59,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import FileResponse
 
 from RyuzakiLib.hackertools.chatgpt import RendyDevChat
-from RyuzakiLib.hackertools.openai import OpenAiToken
+from RyuzakiLib.hackertools.openai_api import OpenAiToken
 from RyuzakiLib.mental import BadWordsList
+from RyuzakiLib.spamwatch.clients import SibylBan
 
 import logging
 import database as db
@@ -77,26 +78,25 @@ HUGGING_TOKEN = os.environ["HUGGING_TOKEN"]
 SOURCE_UNSPLASH_URL = os.environ["SOURCE_UNSPLASH_URL"]
 SOURCE_OCR_URL = os.environ["SOURCE_OCR_URL"]
 SOURCE_ALPHA_URL = os.environ["SOURCE_ALPHA_URL"]
-SOURCE_WAIFU_URL = os.environ["SOURCR_WAIFU_URL"]
+SOURCE_WAIFU_URL = "https://api.waifu.pics"
 SOURCE_TIKTOK_WTF_URL = os.environ["SOURCE_TIKTOK_WTF_URL"]
 SOURCE_TIKTOK_TECH_URL = os.environ["SOURCE_TIKTOK_TECH_URL"]
 DEVELOPER_ID = os.environ["DEVELOPER_ID"]
 
 description = """
+~ Developed written and powered by
 - Ryuzaki Library: [Library Here](https://github.com/TeamKillerX/RyuzakiLib)
-
-•Developed by [@xtdevs](https://t.me/xtdevs)
+- @xtdevs
 """
 
 app = FastAPI(
-    title="RyuzakiLib API",
+    title="API",
     description=description,
     version="1.3.1",
     terms_of_service="Use It Only For Personal Project Else I Need To Delete The Api",
     contact={
-        "name": "RyuzakiLib",
-        "url": "https://t.me/xtdevs",
-        "email": "killerx@randydev.my.id",
+        "name": "🌀ʊʄ⊕ք🌀",
+        "url": "https://t.me/UFoPInfo",
     },
     docs_url="/"
 )
@@ -110,7 +110,8 @@ def validate_api_key_only_devs(api_key: str = Header(...)):
     if api_key not in ONLY_DEVELOPER_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API key")
 
-@app.get("/ryuzaki/getbanlist")
+
+@app.get("/UFoP/getbanlist")
 def sibyl_get_all_banlist():
     banned_users = db.get_all_banned()
     return {
@@ -120,7 +121,7 @@ def sibyl_get_all_banlist():
         }
     }
 
-@app.get("/ryuzaki/blacklist-words")
+@app.get("/UFoP/blacklist-words")
 def blacklist_words():
     try:
         BLACKLIST_WORDS = BadWordsList()
@@ -129,7 +130,7 @@ def blacklist_words():
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
-@app.delete("/ryuzaki/sibyldel")
+@app.delete("/UFoP/bandel")
 def sibyl_system_delete(
     user_id: int = Query(..., description="User ID in query parameter only developer"),
     api_key: None = Depends(validate_api_key_only_devs)
@@ -145,12 +146,13 @@ def sibyl_system_delete(
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
+@app.post("/UFoP/banner"
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
-    api_key: None = Depends(validate_api_key)
+    api_key: None = Depends(validate_api_key_only_devs)
 ):
-    if user_id != int(DEVELOPER_ID):
+    if user_id == int(DEVELOPER_ID):
         return {"status": "false", "message": "Only Developer"}
 
     try:
@@ -178,13 +180,14 @@ def sibyl_system_ban(
         logging.error(f"Error in sibyl_system_ban: {e}")
         return {"status": "false", "message": "Internal server error"}
 
-@app.get("/ryuzaki/sibyl")
+@app.get("/UFoP/bans")
 def sibyl_system(
     user_id: int = Query(..., description="User ID in query parameter"),
-    api_key: None = Depends(validate_api_key)
+    api_key: None = Depends(validate_api_key) or Depends(validate_api_key_only_devs)
 ):
-    sibyl_name, reason, is_banned, date_joined, sibyl_user_id = db.get_sibyl_system_banned(user_id)
-    if sibyl_name and reason and is_banned and date_joined and sibyl_user_id:
+    result = db.get_sibyl_system_banned(user_id)
+    if result is not None:
+        sibyl_name, reason, is_banned, date_joined, sibyl_user_id = result
         return {
             "status": "true",
             "randydev": {
@@ -201,7 +204,7 @@ def sibyl_system(
 @app.get("/ryuzaki/ai")
 def ryuzaki_ai(
     text: str = Query(..., description="text in query parameter"),
-    api_key: None = Depends(validate_api_key)
+    api_key: None = Depends(validate_api_key_only_devs)
 ):
     try:
         response_data = code.ryuzaki_ai_text(text)

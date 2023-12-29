@@ -146,7 +146,7 @@ def sibyl_system_delete(
     except Exception as e:
         return {"status": "false", "message": f"Internal server error: {str(e)}"}
 
-@app.post("/UFoP/banner")
+@app.post("/UFoP/banner"
 def sibyl_system_ban(
     user_id: int = Query(..., description="User ID in query parameter"),
     reason: str = Query(..., description="Reason in query parameter"),
